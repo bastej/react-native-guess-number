@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, TextInput, Button } from "react-native";
 
 import Card from "../components/Card";
+import Input from "../components/Input";
 
 import Colors from "../constants/colors";
 
@@ -11,7 +12,14 @@ const StartGameScreen = props => {
       <Text style={styles.title}>Let's try to challenge me!</Text>
       <Card style={styles.inputContainer}>
         <Text>Select a number</Text>
-        <TextInput />
+        <Input
+          style={styles.input}
+          blurOnSubmit
+          autoCapitalize="none"
+          autoCorrect={false}
+          keyboardType="number-pad"
+          maxLength={2}
+        />
         <View style={styles.buttonsContainer}>
           <View style={styles.button}>
             <Button color={Colors.primary} title="Confirm" onPress={() => {}} />
@@ -39,6 +47,10 @@ const styles = StyleSheet.create({
     width: 300,
     maxWidth: "80%",
     alignItems: "center",
+  },
+  input: {
+    width: "60%",
+    textAlign: "center",
   },
   buttonsContainer: {
     flexDirection: "row",
