@@ -1,5 +1,5 @@
-import React from "react";
-import { View, Text, StyleSheet, TextInput, Button } from "react-native";
+import React, { useState } from "react";
+import { View, Text, StyleSheet, Button } from "react-native";
 
 import Card from "../components/Card";
 import Input from "../components/Input";
@@ -7,6 +7,14 @@ import Input from "../components/Input";
 import Colors from "../constants/colors";
 
 const StartGameScreen = props => {
+  const [enteredValue, setEnteredValue] = useState("");
+
+  const handleNumberInput = inputText => {
+    const validatedValue = inputText.replace(/[^0-9]/g, "");
+
+    setEnteredValue(validatedValue);
+  };
+
   return (
     <View style={styles.screen}>
       <Text style={styles.title}>Let's try to challenge me!</Text>
@@ -19,6 +27,8 @@ const StartGameScreen = props => {
           autoCorrect={false}
           keyboardType="number-pad"
           maxLength={2}
+          onChangeText={handleNumberInput}
+          value={enteredValue}
         />
         <View style={styles.buttonsContainer}>
           <View style={styles.button}>
