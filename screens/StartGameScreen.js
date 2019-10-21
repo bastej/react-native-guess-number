@@ -11,6 +11,7 @@ import {
 
 import Card from "../components/Card";
 import Input from "../components/Input";
+import SelectedNumberContainer from "../components/SelectedNumberContainer";
 
 import Colors from "../constants/colors";
 
@@ -47,12 +48,18 @@ const StartGameScreen = props => {
     // firstly save number and then reset it
     setSelectedNumber(chosenNumber);
     setEnteredValue("");
+    Keyboard.dismiss();
   };
 
   let confirmedOutput;
 
   if (confirmed) {
-    confirmedOutput = <Text>Chosen number is : {selectedNumber}</Text>;
+    confirmedOutput = (
+      <Card style={styles.summaryContainer}>
+        <Text>You selected</Text>
+        <SelectedNumberContainer>{selectedNumber}</SelectedNumberContainer>
+      </Card>
+    );
   }
 
   return (
@@ -121,6 +128,10 @@ const styles = StyleSheet.create({
   },
   button: {
     width: 100,
+  },
+  summaryContainer: {
+    marginTop: 20,
+    alignItems: "center",
   },
 });
 
