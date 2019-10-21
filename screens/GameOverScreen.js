@@ -1,12 +1,16 @@
 import React from "react";
 import { View, Text, StyleSheet, Button } from "react-native";
 
-const GameOverScreen = ({ numberOfRounds }) => {
+import Card from "../components/Card";
+
+const GameOverScreen = ({ numberOfRounds, userNumber, onResetGame }) => {
   return (
-    <View style={styles.screen}>
-      <Text>Game over! Rounds: {numberOfRounds}</Text>
-      <Button title="Play again" />
-    </View>
+    <Card style={styles.screen}>
+      <Text>Game over!</Text>
+      <Text>Rounds: {numberOfRounds}</Text>
+      <Text>Number was {userNumber}</Text>
+      <Button title="Play again" onPress={onResetGame} />
+    </Card>
   );
 };
 
