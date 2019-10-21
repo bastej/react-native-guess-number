@@ -15,6 +15,8 @@ import Colors from "../constants/colors";
 
 const StartGameScreen = props => {
   const [enteredValue, setEnteredValue] = useState("");
+  const [confirmed, setConfirmed] = useState(false);
+  const [selectedNumber, setSelectedNumber] = useState();
 
   const handleNumberInput = inputText => {
     const validatedValue = inputText.replace(/[^0-9]/g, "");
@@ -25,6 +27,23 @@ const StartGameScreen = props => {
   const handleResetInput = () => {
     setEnteredValue("");
   };
+
+  const handleConfirmInput = () => {
+    const chosenNumber = parseInt(enteredValue);
+    if (chosenNumber === NaN || chosenNumber <= 0 || chosenNumber > 99) return;
+
+    setConfirmed(true);
+    // order of calling method belows doesn't matter, but logically will be to
+    // firstly save number and then reset it
+    setSelectedNumber(chosenNumber);
+    setEnteredValue("");
+  };
+
+  let confirmedOutput;
+
+  if (confirmed) {
+    confirmedOutput = <Text>Chosen number is : {selectedNumber}</Text>;
+  }
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -47,7 +66,7 @@ const StartGameScreen = props => {
               <Button
                 color={Colors.primary}
                 title="Confirm"
-                onPress={() => {}}
+                onPress={handleConfirmInput}
               />
             </View>
             <View style={styles.button}>
@@ -59,6 +78,7 @@ const StartGameScreen = props => {
             </View>
           </View>
         </Card>
+        {confirmedOutput}
       </View>
     </TouchableWithoutFeedback>
   );
