@@ -14,7 +14,7 @@ const SelectedNumberContainer = ({ children }) => {
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    marginTop: 10,
+    marginVertical: 18,
     paddingVertical: 5,
     paddingHorizontal: 20,
     borderColor: Colors.primary,
