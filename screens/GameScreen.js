@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { View, Text, StyleSheet, Button, Alert } from "react-native";
 
 import SelectedNumberContainer from "../components/SelectedNumberContainer";
@@ -7,7 +7,7 @@ import Card from "../components/Card";
 const generateRandomNumber = (min, max, exclude) => {
   min = Math.ceil(min);
   max = Math.floor(max);
-  const randomNumber = Math.floor(Math.random() * (max - min) + min) + min;
+  const randomNumber = Math.floor(Math.random() * (max - min)) + min;
 
   if (randomNumber === exclude) {
     return generateRandomNumber(min, max, exclude);
@@ -16,33 +16,51 @@ const generateRandomNumber = (min, max, exclude) => {
   }
 };
 
-const GameScreen = ({ userChoice }) => {
+const GameScreen = ({ userChoice, onGameOver }) => {
   const [currentGuess, setCurrentGuess] = useState(
     generateRandomNumber(1, 100, userChoice)
   );
-  
-  // we use refState to stay some variable unchangeable when Comp. re-render  
+  const [rounds, setRounds] = useState(0);
+
+  // we use refState to stay some variable unchangeable when Comp. re-render
   // next advantage is that when we change that variable Comp. won't be re-render
   const currentRangeStart = useRef(1);
   const currentRangeEnd = useRef(100);
 
+  useEffect(() => {
+    if (userChoice === currentGuess) {
+      onGameOver(rounds);
+    }
+  }, [currentGuess, userChoice, onGameOver]);
+
   const handleNextGuess = direction => {
-    // if has been suggested wrong hint show alert  
-    if((direction === "lower" && currentGuess < userChoice) || (direction === "greater" && currentGuess > userChoice)) {
-          Alert.alert('It was wrong hint!', "Don't try to cheat", [{
-              text: 'I was just joking', style="destructive"
-          }])
-          return;
-      }
+    // if has been suggested wrong hint show alert
+    if (
+      (direction === "lower" && currentGuess < userChoice) ||
+      (direction === "greater" && currentGuess > userChoice)
+    ) {
+      Alert.alert("It was wrong hint!", "Don't try to cheat", [
+        {
+          text: "I was just joking",
+          style: "destructive",
+        },
+      ]);
+      return;
+    }
     // otherwise inform that guess number was wrong and draw next number
     if (direction === "lower") {
-        currentRangeEnd.current = currentGuess;
+      currentRangeEnd.current = currentGuess;
     } else {
-        currentRangeStart.current = currentGuess;
+      currentRangeStart.current = currentGuess;
     }
-    const nextNumber = generateRandomNumber(currentRangeStart.current, currentRangeEnd.current, currentGuess);
+    const nextNumber = generateRandomNumber(
+      currentRangeStart.current,
+      currentRangeEnd.current,
+      currentGuess
+    );
     setCurrentGuess(nextNumber);
-};
+    setRounds(currRounds => currRounds + 1);
+  };
 
   return (
     <View style={styles.screen}>

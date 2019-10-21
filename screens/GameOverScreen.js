@@ -1,10 +1,11 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Button } from "react-native";
 
-const GameOverScreen = props => {
+const GameOverScreen = ({ numberOfRounds }) => {
   return (
     <View style={styles.screen}>
-      <Text>Game over</Text>
+      <Text>Game over! Rounds: {numberOfRounds}</Text>
+      <Button title="Play again" />
     </View>
   );
 };
@@ -13,6 +14,7 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     alignItems: "center",
+    justifyContent: "center",
   },
 });
 
