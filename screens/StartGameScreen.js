@@ -6,6 +6,7 @@ import {
   Button,
   TouchableWithoutFeedback,
   Keyboard,
+  Alert,
 } from "react-native";
 
 import Card from "../components/Card";
@@ -30,7 +31,16 @@ const StartGameScreen = props => {
 
   const handleConfirmInput = () => {
     const chosenNumber = parseInt(enteredValue);
-    if (chosenNumber === NaN || chosenNumber <= 0 || chosenNumber > 99) return;
+    if (isNaN(chosenNumber) || chosenNumber <= 0 || chosenNumber > 99) {
+      Alert.alert("Invalid number!", "Number has to be between 1 and 99", [
+        {
+          text: "Okey",
+          style: "destructive",
+          onPress: handleResetInput,
+        },
+      ]);
+      return;
+    }
 
     setConfirmed(true);
     // order of calling method belows doesn't matter, but logically will be to
