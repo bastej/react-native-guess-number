@@ -22,6 +22,10 @@ const StartGameScreen = props => {
     setEnteredValue(validatedValue);
   };
 
+  const handleResetInput = () => {
+    setEnteredValue("");
+  };
+
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.screen}>
@@ -47,7 +51,11 @@ const StartGameScreen = props => {
               />
             </View>
             <View style={styles.button}>
-              <Button color={Colors.accent} title="Reset" onPress={() => {}} />
+              <Button
+                color={Colors.accent}
+                title="Reset"
+                onPress={handleResetInput}
+              />
             </View>
           </View>
         </Card>
