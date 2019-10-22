@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   View,
-  Text,
   StyleSheet,
   Button,
   TouchableWithoutFeedback,
@@ -13,6 +12,7 @@ import Card from "../components/Card";
 import Input from "../components/Input";
 import SelectedNumberContainer from "../components/SelectedNumberContainer";
 import PlainText from "../components/PlainText";
+import TitleText from "../components/TitleText";
 
 import Colors from "../constants/colors";
 
@@ -70,9 +70,9 @@ const StartGameScreen = ({ onStartGame }) => {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.screen}>
-        <PlainText textWeight="bold" style={styles.title}>
+        <TitleText textWeight="bold" style={styles.title}>
           Let's try to challenge me!
-        </PlainText>
+        </TitleText>
         <Card style={styles.inputContainer}>
           <PlainText textWeight="bold">Select a number</PlainText>
           <Input
