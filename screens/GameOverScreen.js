@@ -11,7 +11,11 @@ const GameOverScreen = ({ numberOfRounds, userNumber, onResetGame }) => {
       <TitleText textWeight="bold">Sorry...</TitleText>
       <View style={styles.imageContainer}>
         <Image
-          source={require("../assets/game-over.jpg")}
+          // source={require("../assets/game-over.jpg")}
+          source={{
+            uri:
+              "https://www.ministerstwogadzetow.com/media/catalog/product/cache/1/image/587x587/9df78eab33525d08d6e5fb8d27136e95/l/a/lampa_game_over_2.jpg",
+          }}
           style={styles.image}
         />
       </View>
