@@ -1,19 +1,19 @@
 import React from "react";
-import { View, Text, StyleSheet, Button } from "react-native";
+import { View, Text, StyleSheet, Button, Image } from "react-native";
 
-import Card from "../components/Card";
+import PlainText from "../components/PlainText";
+import TitleText from "../components/TitleText";
 
 const GameOverScreen = ({ numberOfRounds, userNumber, onResetGame }) => {
   return (
     <View style={styles.screen}>
-      <Card style={styles.card}>
-        <Text>Game over!</Text>
-        <Text>Rounds: {numberOfRounds}</Text>
-        <Text>Number was {userNumber}</Text>
-        <View style={styles.buttonContainer}>
-          <Button title="Play again" onPress={onResetGame} />
-        </View>
-      </Card>
+      <TitleText textWeight="bold">Game over!</TitleText>
+      <Image source={require("../assets/game-over.jpg")} />
+      <PlainText>Rounds: {numberOfRounds}</PlainText>
+      <PlainText>Number was {userNumber}</PlainText>
+      <View style={styles.buttonContainer}>
+        <Button title="Play again" onPress={onResetGame} />
+      </View>
     </View>
   );
 };
@@ -23,10 +23,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-  },
-  card: {
-    alignItems: "center",
-    padding: 30,
   },
   buttonContainer: {
     marginTop: 20,
