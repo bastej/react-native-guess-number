@@ -6,6 +6,7 @@ import Card from "../components/Card";
 import TitleText from "../components/TitleText";
 
 import Colors from "../constants/colors";
+import PrimaryButton from "../components/PrimaryButton";
 
 const generateRandomNumber = (min, max, exclude) => {
   min = Math.ceil(min);
@@ -71,14 +72,15 @@ const GameScreen = ({ userChoice, onGameOver }) => {
       <SelectedNumberContainer>{currentGuess}</SelectedNumberContainer>
       <Card style={styles.buttonsContainer}>
         <View style={styles.button}>
-          <Button
+          <PrimaryButton
+            style={styles.button}
             color={Colors.accent}
             title="LOWER"
             onPress={() => handleNextGuess("lower")}
           />
         </View>
         <View style={styles.button}>
-          <Button
+          <PrimaryButton
             style={styles.button}
             color={Colors.primary}
             title="GREATER"
@@ -98,13 +100,13 @@ const styles = StyleSheet.create({
   },
   buttonsContainer: {
     flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
     marginTop: 20,
-    width: 300,
-    maxWidth: "80%",
+    width: 320,
+    maxWidth: "95%",
   },
   button: {
-    width: 100,
+    width: 130,
   },
 });
 
