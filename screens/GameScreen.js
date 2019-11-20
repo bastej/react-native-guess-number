@@ -1,12 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
-import { View, StyleSheet, Button, Alert } from "react-native";
+import { View, StyleSheet, Alert } from "react-native";
+import { AntDesign as AntdIcon } from "@expo/vector-icons";
 
 import SelectedNumberContainer from "../components/SelectedNumberContainer";
 import Card from "../components/Card";
 import TitleText from "../components/TitleText";
+import PrimaryButton from "../components/PrimaryButton";
 
 import Colors from "../constants/colors";
-import PrimaryButton from "../components/PrimaryButton";
 
 const generateRandomNumber = (min, max, exclude) => {
   min = Math.ceil(min);
@@ -73,17 +74,15 @@ const GameScreen = ({ userChoice, onGameOver }) => {
       <Card style={styles.buttonsContainer}>
         <View style={styles.button}>
           <PrimaryButton
-            style={styles.button}
             color={Colors.accent}
-            title="LOWER"
+            title={<AntdIcon name="downcircleo" size={24} />}
             onPress={() => handleNextGuess("lower")}
           />
         </View>
         <View style={styles.button}>
           <PrimaryButton
-            style={styles.button}
             color={Colors.primary}
-            title="GREATER"
+            title={<AntdIcon name="upcircleo" size={24} />}
             onPress={() => handleNextGuess("greater")}
           />
         </View>
@@ -100,13 +99,10 @@ const styles = StyleSheet.create({
   },
   buttonsContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
     marginTop: 20,
     width: 320,
     maxWidth: "95%",
-  },
-  button: {
-    width: 130,
   },
 });
 
