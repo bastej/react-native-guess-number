@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     width: 300,
-    maxWidth: "80%",
+    maxWidth: "97%",
     alignItems: "center",
   },
   input: {
