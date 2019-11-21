@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
-import { View, StyleSheet, Alert } from "react-native";
+import { View, StyleSheet, Alert, ScrollView } from "react-native";
 import { AntDesign as AntdIcon } from "@expo/vector-icons";
 
 import SelectedNumberContainer from "../components/SelectedNumberContainer";
 import Card from "../components/Card";
 import TitleText from "../components/TitleText";
+import PlainText from "../components/PlainText";
 import PrimaryButton from "../components/PrimaryButton";
 
 import Colors from "../constants/colors";
@@ -22,10 +23,9 @@ const generateRandomNumber = (min, max, exclude) => {
 };
 
 const GameScreen = ({ userChoice, onGameOver }) => {
-  const [currentGuess, setCurrentGuess] = useState(
-    generateRandomNumber(1, 100, userChoice)
-  );
-  const [rounds, setRounds] = useState(0);
+  const initialGuess = generateRandomNumber(1, 100, userChoice);
+  const [currentGuess, setCurrentGuess] = useState(initialGuess);
+  const [pastGuesses, setPastGuesses] = useState([initialGuess]);
 
   // we use refState to stay some variable unchangeable when Comp. re-render
   // next advantage is that when we change that variable Comp. won't be re-render
@@ -34,7 +34,7 @@ const GameScreen = ({ userChoice, onGameOver }) => {
 
   useEffect(() => {
     if (userChoice === currentGuess) {
-      onGameOver(rounds);
+      onGameOver(pastGuesses.length);
     }
   }, [currentGuess, userChoice, onGameOver]);
 
@@ -56,7 +56,7 @@ const GameScreen = ({ userChoice, onGameOver }) => {
     if (direction === "lower") {
       currentRangeEnd.current = currentGuess;
     } else {
-      currentRangeStart.current = currentGuess;
+      currentRangeStart.current = currentGuess + 1;
     }
     const nextNumber = generateRandomNumber(
       currentRangeStart.current,
@@ -64,7 +64,8 @@ const GameScreen = ({ userChoice, onGameOver }) => {
       currentGuess
     );
     setCurrentGuess(nextNumber);
-    setRounds(currRounds => currRounds + 1);
+    // setRounds(currRounds => currRounds + 1);
+    setPastGuesses(currPastGuesses => [nextNumber, ...currPastGuesses]);
   };
 
   return (
@@ -87,6 +88,13 @@ const GameScreen = ({ userChoice, onGameOver }) => {
           />
         </View>
       </Card>
+      <ScrollView>
+        {pastGuesses.map(guess => (
+          <View key={guess}>
+            <PlainText>{guess}</PlainText>
+          </View>
+        ))}
+      </ScrollView>
     </View>
   );
 };
