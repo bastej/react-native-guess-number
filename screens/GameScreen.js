@@ -68,6 +68,15 @@ const GameScreen = ({ userChoice, onGameOver }) => {
     setPastGuesses(currPastGuesses => [nextNumber, ...currPastGuesses]);
   };
 
+  const renderListItem = (value, numOfRounds) => (
+    <View key={value} style={styles.listItem}>
+      <PlainText>Round No. #{numOfRounds}</PlainText>
+      <PlainText textWeight="bold" style={styles.listItemTitle}>
+        {value}
+      </PlainText>
+    </View>
+  );
+
   return (
     <View style={styles.screen}>
       <TitleText textWeight="bold">Opponent's Guess</TitleText>
@@ -88,13 +97,13 @@ const GameScreen = ({ userChoice, onGameOver }) => {
           />
         </View>
       </Card>
-      <ScrollView>
-        {pastGuesses.map(guess => (
-          <View key={guess}>
-            <PlainText>{guess}</PlainText>
-          </View>
-        ))}
-      </ScrollView>
+      <View style={styles.list}>
+        <ScrollView>
+          {pastGuesses.map((guess, index) =>
+            renderListItem(guess, pastGuesses.length - index)
+          )}
+        </ScrollView>
+      </View>
     </View>
   );
 };
@@ -112,6 +121,14 @@ const styles = StyleSheet.create({
     width: 320,
     maxWidth: "95%",
   },
+  listItem: {
+    padding: 7,
+    borderBottomWidth: 3,
+    borderColor: Colors.primary,
+    marginVertical: 5,
+  },
+  listItemTitle: { fontSize: 20, textAlign: "center" },
+  list: { width: "80%", flex: 1 },
 });
 
 export default GameScreen;
