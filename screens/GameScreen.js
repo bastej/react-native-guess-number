@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { View, StyleSheet, Alert, ScrollView } from "react-native";
+import { View, StyleSheet, Alert, ScrollView, Dimensions } from "react-native";
 import { AntDesign as AntdIcon } from "@expo/vector-icons";
 
 import SelectedNumberContainer from "../components/SelectedNumberContainer";
@@ -126,10 +126,13 @@ const styles = StyleSheet.create({
     borderBottomWidth: 3,
     borderColor: Colors.primary,
     marginVertical: 5,
-    width: "60%",
+    width: "100%",
   },
   listItemTitle: { fontSize: 20, textAlign: "center" },
-  listContainer: { width: "80%", flex: 1 },
+  listContainer: {
+    width: Dimensions.get("window").width > 320 ? "60%" : "100%",
+    flex: 1,
+  },
   list: { alignItems: "center", justifyContent: "flex-end", flexGrow: 1 },
 });
 
