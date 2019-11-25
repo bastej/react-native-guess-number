@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, Button, Image } from "react-native";
+import { View, Text, StyleSheet, ScrollView, Image } from "react-native";
 // Hint: <View/> using flex-box
 
 import PlainText from "../components/PlainText";
@@ -10,39 +10,41 @@ import Colors from "../constants/colors";
 
 const GameOverScreen = ({ numberOfRounds, userNumber, onResetGame }) => {
   return (
-    <View style={styles.screen}>
-      <TitleText textWeight="bold">Sorry...</TitleText>
-      <View style={styles.imageContainer}>
-        <Image
-          // source={require("../assets/game-over.jpg")}
-          // fadeDuration={1000} default 300ms
-          source={{
-            uri:
-              "https://www.ministerstwogadzetow.com/media/catalog/product/cache/1/image/587x587/9df78eab33525d08d6e5fb8d27136e95/l/a/lampa_game_over_2.jpg",
-          }}
-          style={styles.image}
-        />
-      </View>
-      {/* 
+    <ScrollView>
+      <View style={styles.screen}>
+        <TitleText textWeight="bold">Sorry...</TitleText>
+        <View style={styles.imageContainer}>
+          <Image
+            // source={require("../assets/game-over.jpg")}
+            // fadeDuration={1000} default 300ms
+            source={{
+              uri:
+                "https://www.ministerstwogadzetow.com/media/catalog/product/cache/1/image/587x587/9df78eab33525d08d6e5fb8d27136e95/l/a/lampa_game_over_2.jpg",
+            }}
+            style={styles.image}
+          />
+        </View>
+        {/* 
           <Text/> not using flex-box
           we can style just parent Text and all child Texts will inherit him styles
       */}
-      <View style={styles.resultsContainer}>
-        <PlainText style={styles.resultsText}>
-          Your phone needed{" "}
-          <PlainText style={styles.highlight} textWeight="bold">
-            {numberOfRounds}
-          </PlainText>{" "}
-          rounds to guess number{" "}
-          <PlainText style={styles.highlight} textWeight="bold">
-            {userNumber}
+        <View style={styles.resultsContainer}>
+          <PlainText style={styles.resultsText}>
+            Your phone needed{" "}
+            <PlainText style={styles.highlight} textWeight="bold">
+              {numberOfRounds}
+            </PlainText>{" "}
+            rounds to guess number{" "}
+            <PlainText style={styles.highlight} textWeight="bold">
+              {userNumber}
+            </PlainText>
           </PlainText>
-        </PlainText>
+        </View>
+        <View style={styles.buttonContainer}>
+          <PrimaryButton title="Play again" onPress={onResetGame} />
+        </View>
       </View>
-      <View style={styles.buttonContainer}>
-        <PrimaryButton title="Play again" onPress={onResetGame} />
-      </View>
-    </View>
+    </ScrollView>
   );
 };
 

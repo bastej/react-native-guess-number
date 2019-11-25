@@ -78,33 +78,35 @@ const GameScreen = ({ userChoice, onGameOver }) => {
   );
 
   return (
-    <View style={styles.screen}>
-      <TitleText textWeight="bold">Opponent's Guess</TitleText>
-      <SelectedNumberContainer>{currentGuess}</SelectedNumberContainer>
-      <Card style={styles.buttonsContainer}>
-        <View style={styles.button}>
-          <PrimaryButton
-            color={Colors.accent}
-            title={<AntdIcon name="downcircleo" size={24} />}
-            onPress={() => handleNextGuess("lower")}
-          />
+    <ScrollView>
+      <View style={styles.screen}>
+        <TitleText textWeight="bold">Opponent's Guess</TitleText>
+        <SelectedNumberContainer>{currentGuess}</SelectedNumberContainer>
+        <Card style={styles.buttonsContainer}>
+          <View style={styles.button}>
+            <PrimaryButton
+              color={Colors.accent}
+              title={<AntdIcon name="downcircleo" size={24} />}
+              onPress={() => handleNextGuess("lower")}
+            />
+          </View>
+          <View style={styles.button}>
+            <PrimaryButton
+              color={Colors.primary}
+              title={<AntdIcon name="upcircleo" size={24} />}
+              onPress={() => handleNextGuess("greater")}
+            />
+          </View>
+        </Card>
+        <View style={styles.listContainer}>
+          <ScrollView contentContainerStyle={styles.list}>
+            {pastGuesses.map((guess, index) =>
+              renderListItem(guess, pastGuesses.length - index)
+            )}
+          </ScrollView>
         </View>
-        <View style={styles.button}>
-          <PrimaryButton
-            color={Colors.primary}
-            title={<AntdIcon name="upcircleo" size={24} />}
-            onPress={() => handleNextGuess("greater")}
-          />
-        </View>
-      </Card>
-      <View style={styles.listContainer}>
-        <ScrollView contentContainerStyle={styles.list}>
-          {pastGuesses.map((guess, index) =>
-            renderListItem(guess, pastGuesses.length - index)
-          )}
-        </ScrollView>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
