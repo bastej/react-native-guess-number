@@ -1,41 +1,29 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Dimensions,
-  TouchableOpacity,
-} from "react-native";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { AntDesign as AntdIcon } from "@expo/vector-icons";
+import { useScreenOrientation } from "../hooks/useScreenOrientation";
 
 import TitleText from "./TitleText";
 
 import Colors from "../constants/colors";
-import { AntDesign as AntdIcon } from "@expo/vector-icons";
 
 const Header = ({ title }) => {
-  const [isLandscapeMode, setIsLandscapeMode] = useState(
-    Dimensions.get("window").width > Dimensions.get("window").height
-  );
-  const [headerHeight, setHeaderHeight] = useState(isLandscapeMode ? 80 : 90);
+  const [screenOrientation] = useScreenOrientation();
 
-  useEffect(() => updateLayout(), [isLandscapeMode]);
+  const isLandscape = screenOrientation === "landscape";
 
-  const setScreenMode = () => {
-    setIsLandscapeMode(
-      Dimensions.get("window").width > Dimensions.get("window").height
-    );
-  };
+  const [headerHeight, setHeaderHeight] = useState(isLandscape ? 80 : 90);
+
+  useEffect(() => updateLayout(), [screenOrientation]);
 
   const updateLayout = () => {
-    setHeaderHeight(isLandscapeMode ? 80 : 90);
+    setHeaderHeight(isLandscape ? 80 : 90);
   };
-
-  Dimensions.addEventListener("change", setScreenMode);
 
   return (
     <View style={{ ...styles.header, height: headerHeight }}>
       <TitleText style={styles.headerTitle}>{title}</TitleText>
-      {isLandscapeMode && (
+      {isLandscape && (
         <TouchableOpacity
           onPress={() =>
             alert("Switch to portrait mode for better user experience")
