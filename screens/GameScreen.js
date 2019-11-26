@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 import { View, StyleSheet, Alert, ScrollView, Dimensions } from "react-native";
 import { AntDesign as AntdIcon } from "@expo/vector-icons";
 
+import { useScreenOrientation } from "../hooks/useScreenOrientation";
+
 import SelectedNumberContainer from "../components/SelectedNumberContainer";
 import Card from "../components/Card";
 import TitleText from "../components/TitleText";
@@ -26,6 +28,7 @@ const GameScreen = ({ userChoice, onGameOver }) => {
   const initialGuess = generateRandomNumber(1, 100, userChoice);
   const [currentGuess, setCurrentGuess] = useState(initialGuess);
   const [pastGuesses, setPastGuesses] = useState([initialGuess]);
+  const [screenOrientation] = useScreenOrientation();
 
   // we use refState to stay some variable unchangeable when Comp. re-render
   // next advantage is that when we change that variable Comp. won't be re-render
@@ -77,26 +80,52 @@ const GameScreen = ({ userChoice, onGameOver }) => {
     </View>
   );
 
-  return (
-    <ScrollView>
-      <View style={styles.screen}>
-        <TitleText textWeight="bold">Opponent's Guess</TitleText>
-        <SelectedNumberContainer>{currentGuess}</SelectedNumberContainer>
-        <Card style={styles.buttonsContainer}>
-          <View style={styles.button}>
+  if (screenOrientation === "landscape") {
+    return (
+      <ScrollView>
+        <View style={styles.screen}>
+          <TitleText textWeight="bold">Opponent's Guess</TitleText>
+          <View style={styles.controls}>
             <PrimaryButton
               color={Colors.accent}
               title={<AntdIcon name="downcircleo" size={24} />}
               onPress={() => handleNextGuess("lower")}
             />
-          </View>
-          <View style={styles.button}>
+            <SelectedNumberContainer>{currentGuess}</SelectedNumberContainer>
             <PrimaryButton
               color={Colors.primary}
               title={<AntdIcon name="upcircleo" size={24} />}
               onPress={() => handleNextGuess("greater")}
             />
           </View>
+          <View style={styles.listContainer}>
+            <ScrollView contentContainerStyle={styles.list}>
+              {pastGuesses.map((guess, index) =>
+                renderListItem(guess, pastGuesses.length - index)
+              )}
+            </ScrollView>
+          </View>
+        </View>
+      </ScrollView>
+    );
+  }
+
+  return (
+    <ScrollView>
+      <View style={styles.screen}>
+        <TitleText textWeight="bold">Opponent's Guess</TitleText>
+        <SelectedNumberContainer>{currentGuess}</SelectedNumberContainer>
+        <Card style={styles.buttonsContainer}>
+          <PrimaryButton
+            color={Colors.accent}
+            title={<AntdIcon name="downcircleo" size={24} />}
+            onPress={() => handleNextGuess("lower")}
+          />
+          <PrimaryButton
+            color={Colors.primary}
+            title={<AntdIcon name="upcircleo" size={24} />}
+            onPress={() => handleNextGuess("greater")}
+          />
         </Card>
         <View style={styles.listContainer}>
           <ScrollView contentContainerStyle={styles.list}>
@@ -136,6 +165,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   list: { alignItems: "center", justifyContent: "flex-end", flexGrow: 1 },
+  controls: {
+    width: "80%",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+  },
 });
 
 export default GameScreen;
