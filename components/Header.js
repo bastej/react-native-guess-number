@@ -21,7 +21,16 @@ const Header = ({ title }) => {
   };
 
   return (
-    <View style={{ ...styles.header, height: headerHeight }}>
+    <View
+      style={{
+        ...styles.headerBase,
+        height: headerHeight,
+        ...Platform.select({
+          ios: styles.headerIOS,
+          android: styles.headerAndroid,
+        }),
+      }}
+    >
       <TitleText style={styles.headerTitle} textWeight="bold">
         {title}
       </TitleText>
@@ -39,16 +48,20 @@ const Header = ({ title }) => {
 };
 
 const styles = StyleSheet.create({
-  header: {
+  headerBase: {
     width: "100%",
-    // height: 90,
     paddingTop: 36,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: Platform.OS === "ios" ? "#fff" : Colors.primary,
-    borderBottomWidth: Platform.OS === "ios" ? 1 : 0,
+  },
+  headerIOS: {
+    backgroundColor: "#fff",
+    borderBottomWidth: 1,
     borderBottomColor: "#ccc",
+  },
+  headerAndroid: {
+    backgroundColor: Colors.primary,
   },
   headerTitle: {
     color: Platform.OS === "ios" ? Colors.primary : "#fff",
