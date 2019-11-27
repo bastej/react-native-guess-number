@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, TouchableOpacity, Platform } from "react-native";
 import { AntDesign as AntdIcon } from "@expo/vector-icons";
-import { useScreenOrientation } from "../hooks/useScreenOrientation";
+import { useScreenOrientation, LANDSCAPE } from "../hooks/useScreenOrientation";
 
 import TitleText from "./TitleText";
 
@@ -10,7 +10,7 @@ import Colors from "../constants/colors";
 const Header = ({ title }) => {
   const [screenOrientation] = useScreenOrientation();
 
-  const isLandscape = screenOrientation === "landscape";
+  const isLandscape = screenOrientation === LANDSCAPE;
 
   const [headerHeight, setHeaderHeight] = useState(isLandscape ? 80 : 90);
 
@@ -40,7 +40,10 @@ const Header = ({ title }) => {
             alert("Switch to portrait mode for better user experience")
           }
         >
-          <AntdIcon name="infocirlceo" size={24} color="white" />
+          <AntdIcon
+            name="infocirlceo"
+            color={Platform.select({ ios: Colors.primary, android: "#fff" })}
+          />
         </TouchableOpacity>
       )}
     </View>
