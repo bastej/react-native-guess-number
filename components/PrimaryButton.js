@@ -1,25 +1,45 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  TouchableNativeFeedback,
+  Platform,
+} from "react-native";
 
 import Colors from "../constants/colors";
 
 const PrimaryButton = ({ onPress, title, color, style }) => {
+  let ButtonComponent = TouchableOpacity;
+
+  if (Platform.OS === "android" && Platform.Version >= 21) {
+    ButtonComponent = TouchableNativeFeedback;
+  }
+
   return (
-    <TouchableOpacity activeOpacity={0.8} onPress={onPress}>
-      <View
-        style={{
-          ...styles.button,
-          ...style,
-          ...(color ? { backgroundColor: color } : {}),
-        }}
-      >
-        <Text style={styles.text}>{title}</Text>
-      </View>
-    </TouchableOpacity>
+    <View style={styles.buttonContainer}>
+      <ButtonComponent activeOpacity={0.8} onPress={onPress}>
+        <View
+          style={{
+            ...styles.button,
+            ...style,
+            ...(color ? { backgroundColor: color } : {}),
+          }}
+        >
+          <Text style={styles.text}>{title}</Text>
+        </View>
+      </ButtonComponent>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  // fix for better UX with ripple effect on Android
+  buttonContainer: {
+    borderRadius: 10,
+    overflow: "hidden",
+  },
   button: {
     backgroundColor: Colors.primary,
     paddingHorizontal: 30,
