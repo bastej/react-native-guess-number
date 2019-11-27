@@ -1,11 +1,18 @@
 import { useState, useEffect } from "react";
 import { Dimensions } from "react-native";
 
+export const PORTRAIT = "portrait";
+export const LANDSCAPE = "landscape";
+
+const getScreenOrientation = () => {
+  return Dimensions.get("window").width < Dimensions.get("window").height
+    ? PORTRAIT
+    : LANDSCAPE;
+};
+
 export const useScreenOrientation = () => {
   const [screenOrientation, setScreenOrientation] = useState(
-    Dimensions.get("window").width < Dimensions.get("window").height
-      ? "portrait"
-      : "landscape"
+    getScreenOrientation()
   );
 
   useEffect(() => {
@@ -17,11 +24,7 @@ export const useScreenOrientation = () => {
   });
 
   const setScreenMode = () => {
-    setScreenOrientation(
-      Dimensions.get("window").width < Dimensions.get("window").height
-        ? "portrait"
-        : "landscape"
-    );
+    setScreenOrientation(getScreenOrientation());
   };
   return [screenOrientation];
 };
