@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Platform } from "react-native";
 import { AntDesign as AntdIcon } from "@expo/vector-icons";
 import { useScreenOrientation } from "../hooks/useScreenOrientation";
 
@@ -22,7 +22,9 @@ const Header = ({ title }) => {
 
   return (
     <View style={{ ...styles.header, height: headerHeight }}>
-      <TitleText style={styles.headerTitle}>{title}</TitleText>
+      <TitleText style={styles.headerTitle} textWeight="bold">
+        {title}
+      </TitleText>
       {isLandscape && (
         <TouchableOpacity
           onPress={() =>
@@ -41,13 +43,15 @@ const styles = StyleSheet.create({
     width: "100%",
     // height: 90,
     paddingTop: 36,
-    backgroundColor: Colors.primary,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: Platform.OS === "ios" ? "#fff" : Colors.primary,
+    borderBottomWidth: Platform.OS === "ios" ? 1 : 0,
+    borderBottomColor: "#ccc",
   },
   headerTitle: {
-    color: "#fff",
+    color: Platform.OS === "ios" ? Colors.primary : "#fff",
     marginHorizontal: 6,
   },
 });
